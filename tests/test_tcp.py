@@ -5,11 +5,12 @@ from twisted.internet import reactor
 from twisted.internet import endpoints
 from twisted.internet import defer
 
-from singtserver import SessionFiles as ServerSessionFiles
-from singtserver import Database
 from singtserver import Command
-from singtserver import UDPServer
+from singtserver import Database
+from singtserver import Participants
+from singtserver import SessionFiles as ServerSessionFiles
 from singtserver import TCPServerFactory
+from singtserver import UDPServer
 from singtserver import WebServer
 from singtclient import client
 
@@ -28,6 +29,10 @@ def create_server(context):
     # Create a database
     database = Database(context)
     context["database"] = database
+
+    # Creat a participants list
+    participants = Participants(context)
+    context["participants"] = participants
 
     # Define the UDPServer class
     context["udp_server"] = UDPServer
